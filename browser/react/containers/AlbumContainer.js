@@ -1,8 +1,27 @@
 import React, {Component} from 'react';
-import store from '../store';
+import {connect} from 'react-redux';
 import Album from '../components/Album';
 import {toggleSong} from '../action-creators/player';
 
+const mapStateToProps = (state, ownProps) => {
+  return {
+    selectedAlbum: state.albums.selected,
+    currentSong: state.player.currentsong,
+    isPlaying: state.player.isPlaying
+  }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    toggleOne: function (song, list) {
+      dispatch(toggleSong(song, list));
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Album);
+
+/*
 export default class extends Component {
 
   constructor() {
@@ -34,3 +53,4 @@ export default class extends Component {
   }
 
 }
+*/

@@ -1,7 +1,16 @@
 import React, {Component} from 'react';
-import store from '../store';
+import {connect} from 'react-redux';
 import Albums from '../components/Albums';
 
+const mapStateToProps = (state, ownProps) => {
+  return {
+    albums: state.albums.list
+  }
+}
+
+export default connect(mapStateToProps)(Albums);
+
+/*
 export default class extends Component {
 
   constructor() {
@@ -24,3 +33,4 @@ export default class extends Component {
   }
 
 }
+*/

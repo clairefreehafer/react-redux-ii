@@ -1,10 +1,7 @@
 import {connect} from 'react-redux';
 import Station from '../components/Station';
 import {convertSong} from '../utils';
-
-const selectStation = function (stations) {
-
-}
+import {toggleSong} from '../action-creators/player';
 
 const mapStateToProps = (state, ownProps) => {
 	return {
@@ -17,8 +14,12 @@ const mapStateToProps = (state, ownProps) => {
 	};
 }
 
-const mapDispatchToProps = dispatch => {
-	return {}
+const mapDispatchToProps = (dispatch, ownProps) => {
+	return {
+		toggleOne: function (selectedSong, selectedSongList) {
+			dispatch(toggleSong(selectedSong, selectedSongList));
+		}
+	}
 }
 
 const StationContainer = connect(mapStateToProps, mapDispatchToProps)(Station);

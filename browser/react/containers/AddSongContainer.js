@@ -2,33 +2,35 @@
 
 import React from 'react';
 import AddSong from '../components/AddSong';
-import store from '../store';
+import {connect} from 'react-redux';
 import {loadAllSongs, addSongToPlaylist} from '../action-creators/playlists';
+
+const mapStateToProps = (state) => {
+  console.log('state', state)
+  return {
+    songs: state.playlists.songs,
+    selectedPlaylist: state.playlists.selected
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addSong: function (playlistId, songId) {
+      dispatch(addSongToPlaylist(playlistId, songId))
+    }
+  }
+}
 
 class AddSongContainer extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = Object.assign({
+    this.state = {
       songId: 1,
       error: false
-    }, store.getState().playlists);
+    };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  componentDidMount() {
-
-    this.unsubscribe = store.subscribe(() => {
-      this.setState(store.getState().playlists);
-    });
-
-    store.dispatch(loadAllSongs());
-
-  }
-
-  componentWillUnmount() {
-    this.unsubscribe();
   }
 
   handleChange(evt) {
@@ -42,16 +44,16 @@ class AddSongContainer extends React.Component {
 
     evt.preventDefault();
 
-    const playlistId = this.state.selected.id;
+    const playlistId = this.props.selectedPlaylist.id;
     const songId = this.state.songId;
-
-    store.dispatch(addSongToPlaylist(playlistId, songId));
+    console.log('handle submit', playlistId, songId)
+    // store.dispatch(addSongToPlaylist(playlistId, songId));
+    this.props.addSong(playlistId, songId);
 
   }
 
   render() {
-
-    const songs = this.state.songs;
+    const songs = this.props.songs;
     const error = this.state.error;
 
     return (
@@ -65,4 +67,4 @@ class AddSongContainer extends React.Component {
   }
 }
 
-export default AddSongContainer;
+export default connect(mapStateToProps, mapDispatchToProps)(AddSongContainer);

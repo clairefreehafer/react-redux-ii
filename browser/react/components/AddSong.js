@@ -22,6 +22,7 @@ export default function (props) {
                 name="song"
                 required
                 onChange={handleChange}>
+                <option />
                 {
                   songs && songs.map(song => (
                     <option key={song.id} value={song.id}>{song.name}</option>

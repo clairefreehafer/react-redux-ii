@@ -1,7 +1,15 @@
 import React from 'react';
 import NewPlaylist from '../components/NewPlaylist';
-import store from '../store';
+import {connect} from 'react-redux';
 import {addNewPlaylist} from '../action-creators/playlists';
+
+const mapDispatchToProps = dispatch => {
+	return {
+    newPlaylist: function(inputValue) {
+      dispatch(addNewPlaylist(inputValue))
+    }
+  }
+}
 
 class FormContainer extends React.Component {
 
@@ -27,7 +35,7 @@ class FormContainer extends React.Component {
 
     evt.preventDefault();
 
-    store.dispatch(addNewPlaylist(this.state.inputValue));
+    this.props.newPlaylist(this.state.inputValue);
 
     this.setState({
       inputValue: '',
@@ -57,4 +65,4 @@ class FormContainer extends React.Component {
 
 }
 
-export default FormContainer;
+export default connect(null, mapDispatchToProps)(FormContainer);

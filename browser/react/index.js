@@ -53,6 +53,7 @@ const onArtistEnter = function (nextRouterState) {
 const onPlaylistEnter = function (nextRouterState) {
   const playlistId = nextRouterState.params.playlistId;
   store.dispatch(getPlaylistById(playlistId));
+  store.dispatch(loadAllSongs());
 };
 
 const onStationsEnter = function (nextRouterState) {
