@@ -1,7 +1,7 @@
 import React from 'react';
 
+
 export default function (props) {
-  console.log('props', props)
 
   const currentSong = props.currentSong;
   const currentSongList = props.currentSongList;
@@ -33,4 +33,4 @@ export default function (props) {
       </div>
     </footer>
   );
-};
+}
